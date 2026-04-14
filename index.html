@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Facturado Abril 2026 — Dashboard | RAZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0D0D14;--paper:#F5F5F0;--accent:#E63946;--gold:#F4A261;--blue:#1A3C5E;--pale:#EDF2F4;--muted:#8D99AE;--green:#1E8449;--green-bg:#27AE60;--warn:#E67E22}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:14px}
+.site-header{background:var(--ink);padding:22px 48px;display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid var(--accent)}
+.brand{display:flex;align-items:center;gap:14px}
+.logo{width:50px;height:50px;background:var(--accent);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',cursive;font-size:24px;color:white;letter-spacing:1px}
+.brand-text h1{font-family:'Bebas Neue',cursive;font-size:30px;color:white;letter-spacing:3px;line-height:1}
+.brand-text p{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin-top:3px}
+.header-meta{text-align:right}
+.header-meta strong{color:var(--gold);font-size:18px;font-family:'Bebas Neue',cursive;display:block;letter-spacing:2px}
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--blue) 0%,#0D2240 100%);padding:22px 48px;display:grid;grid-template-columns:repeat(6,1fr);gap:1px;border-bottom:3px solid var(--gold);font-family:'DM Sans',sans-serif}
+.sb{padding:14px 18px;border-right:1px solid rgba(255,255,255,.08);font-family:'DM Sans',sans-serif;overflow:hidden}
+.sb:last-child{border-right:none}
+.sl{font-family:'DM Sans',sans-serif;font-size:9px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.45);margin-bottom:6px;display:block}
+/* Big numbers use span.bnum - explicit Bebas, does NOT cascade */
+span.bnum{font-family:'Bebas Neue',cursive;font-size:34px;color:white;line-height:1.05;display:block}
+span.bnum.gold{color:var(--gold)}span.bnum.green{color:#56d27a}span.bnum.sm{font-size:24px}
+.ss{font-family:'DM Sans',sans-serif;font-size:10px;color:rgba(255,255,255,.35);margin-top:3px;display:block}
+.ss.hi{color:var(--gold);font-family:'JetBrains Mono',monospace;font-weight:600}
+/* Client name lists — ALL properties forced with !important */
+.cname-list{margin-top:6px;display:flex;flex-direction:column;gap:2px}
+.cname{font-family:'JetBrains Mono',monospace !important;font-size:8px !important;font-weight:400 !important;color:rgba(255,255,255,.55) !important;line-height:1.55;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:none !important;letter-spacing:0 !important}
+.pact-lbl{font-family:'DM Sans',sans-serif !important;font-size:8px !important;font-weight:700 !important;text-transform:uppercase !important;letter-spacing:.08em !important;color:rgba(245,158,11,.9) !important;display:block;margin-top:7px;margin-bottom:3px}
+.pact-num{font-family:'Bebas Neue',cursive !important;font-size:28px !important;color:#ff6b6b !important;line-height:1;display:block;margin-bottom:2px}
+.pact-sub{font-family:'DM Sans',sans-serif !important;font-size:8px !important;color:rgba(255,255,255,.4) !important;display:block}
+/* PROGRESS STRIP */
+.pstrip{background:#1A3C5E;padding:9px 48px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,.05);flex-wrap:wrap}
+.pl{font-size:9px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.35);white-space:nowrap}
+.pt{flex:1;min-width:80px;height:6px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden}
+.pf{height:100%;border-radius:3px}
+.pf.cj{background:linear-gradient(90deg,var(--gold),#d4870a)}
+.pf.dl{background:linear-gradient(90deg,#56d27a,var(--green))}
+.pf.cl{background:linear-gradient(90deg,#6eb5ff,#2563EB)}
+.pp{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:white;white-space:nowrap;min-width:44px;text-align:right}
+.dnote{background:var(--ink);padding:9px 48px;font-size:10px;color:rgba(255,255,255,.35);display:flex;gap:14px;flex-wrap:wrap}
+.dnote strong{color:var(--gold);font-family:'JetBrains Mono',monospace}
+/* MAIN */
+.main{padding:26px 48px}
+.stitle{font-family:'Bebas Neue',cursive;font-size:20px;letter-spacing:3px;color:var(--blue);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.stitle::after{content:'';flex:1;height:2px;background:rgba(0,0,0,.07)}
+.mtgl{display:flex;gap:2px;margin-bottom:22px;flex-wrap:wrap}
+.mbtn{padding:10px 22px;background:var(--pale);border:2px solid var(--pale);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);transition:all .15s}
+.mbtn:hover{background:var(--blue);color:white;border-color:var(--blue)}
+.mbtn.active{background:var(--ink);border-color:var(--ink);color:white}
+.vtabs{display:flex;gap:5px;margin-bottom:22px;flex-wrap:wrap}
+.vt{padding:7px 16px;border:2px solid var(--blue);background:transparent;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--blue);border-radius:2px;transition:all .15s}
+.vt:hover{background:var(--blue);color:white}
+.vt.active{background:var(--accent);border-color:var(--accent);color:white}
+.vt-all.active{background:var(--ink);border-color:var(--ink)}
+.vt.nuevo{border-color:var(--accent);color:var(--accent)}
+.vt.nuevo.active{background:var(--accent);color:white}
+/* VENDOR HEADER */
+.vh{background:var(--ink);padding:16px 22px;display:flex;justify-content:space-between;align-items:center;margin-bottom:2px}
+.vh.nuevo{background:linear-gradient(90deg,#4a0010,var(--accent))}
+.vn{font-family:'Bebas Neue',cursive;font-size:24px;letter-spacing:3px;color:white}
+.vs{font-size:10px;color:rgba(255,255,255,.4);margin-top:2px}
+.vsr{display:flex;gap:14px}
+.vsb{text-align:right}
+.vsl{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.4);margin-bottom:2px}
+.vsv{font-family:'Bebas Neue',cursive;font-size:22px;letter-spacing:1px}
+.vsv.sm{font-size:15px;margin-top:2px}
+.ccj{color:var(--gold)}.cdl{color:#56d27a}.cac{color:#6eb5ff}.cmeta{color:rgba(255,255,255,.45)}
+/* KPI */
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:2px}
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-bottom:2px}
+.kc{background:white;padding:16px 20px}
+.kl{font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:6px}
+.kv{font-family:'Bebas Neue',cursive;font-size:36px;line-height:1;letter-spacing:1px}
+.kv.bl{color:var(--blue)}.kv.go{color:#B45309}.kv.gr{color:var(--green)}.kv.re{color:var(--accent)}
+.km{font-size:10px;color:var(--muted);margin:4px 0 8px}
+.kbt{background:var(--pale);height:5px;border-radius:3px;overflow:hidden;margin-bottom:4px}
+.kb{height:100%;border-radius:3px}
+.kb.bl{background:var(--blue)}.kb.go{background:var(--gold)}.kb.gr{background:var(--green-bg)}.kb.re{background:var(--accent)}
+.kp{font-size:9px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+.dc{background:white;padding:18px 22px;border-left:5px solid var(--gold)}
+.dc.dl{border-left-color:var(--green-bg)}
+.dt{font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:6px}
+.dm{font-family:'Bebas Neue',cursive;font-size:44px;letter-spacing:1px;line-height:1;color:var(--ink)}
+.du{font-size:14px;color:var(--muted);font-family:'DM Sans',sans-serif;font-weight:400}
+.dn{font-size:10px;color:var(--muted);margin-top:6px;padding-top:6px;border-top:1px solid var(--pale)}
+/* GAUGES */
+.gug{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:2px}
+.gc{background:white;padding:16px 18px;display:flex;align-items:center;gap:12px}
+.grw{position:relative;width:80px;height:80px;flex-shrink:0}
+.grw svg{width:80px;height:80px;transform:rotate(-90deg)}
+.gtr{fill:none;stroke:var(--pale);stroke-width:9}
+.gfl{fill:none;stroke-width:9;stroke-linecap:round}
+.gcen{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.gpct{font-family:'Bebas Neue',cursive;font-size:17px;color:var(--ink)}
+.gi h4{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:4px}
+.gi .big{font-family:'Bebas Neue',cursive;font-size:21px;letter-spacing:.5px;line-height:1;color:var(--ink)}
+.gi .sub{font-size:10px;color:var(--muted);margin-top:3px}
+/* BARS */
+.ba{background:white;padding:18px 22px;margin-bottom:2px}
+.bt{font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:12px}
+.br{display:flex;align-items:center;gap:10px;margin-bottom:7px}
+.bla{width:145px;font-size:10px;font-weight:600;color:var(--ink);text-align:right;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-transform:uppercase;letter-spacing:.3px}
+.btr{flex:1;height:20px;background:var(--pale);border-radius:2px;overflow:hidden}
+.bf{height:100%;border-radius:2px;display:flex;align-items:center;padding-left:8px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:white;min-width:2px}
+.bf.bl{background:linear-gradient(90deg,var(--blue),#2563EB)}
+.bf.go{background:linear-gradient(90deg,#B45309,var(--gold))}
+.bpc{font-size:9px;color:var(--muted);width:36px;font-family:'JetBrains Mono',monospace;flex-shrink:0;text-align:right}
+/* PARETO */
+.pa{background:white;margin-bottom:2px}
+.ph{padding:12px 18px 0;font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--muted)}
+table.pt{width:100%;border-collapse:collapse;font-size:11px}
+table.pt th{font-size:8px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);padding:9px 14px;border-bottom:2px solid var(--pale);font-weight:700;text-align:left}
+table.pt td{padding:8px 14px;border-bottom:1px solid var(--pale);color:var(--ink)}
+table.pt tr:hover td{background:#FAFAFA}
+.rn{font-family:'Bebas Neue',cursive;font-size:18px;color:var(--muted)}
+.rn.t3{color:var(--gold)}
+.mn{font-family:'JetBrains Mono',monospace;font-weight:600}
+.cli-list{display:flex;flex-wrap:wrap;gap:4px}
+.cli-tag{background:var(--pale);padding:2px 8px;font-size:8.5px;border-radius:2px;color:var(--ink);font-family:'JetBrains Mono',monospace;white-space:nowrap}
+/* COBERTURA */
+.ca{background:white;padding:18px 22px;margin-bottom:2px}
+.cr{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.cn{font-size:10px;font-weight:600;color:var(--ink);min-width:120px;text-transform:uppercase;letter-spacing:.3px}
+.ctr{flex:1;height:8px;background:var(--pale);border-radius:2px;overflow:hidden}
+.cfil{height:100%;border-radius:2px}
+.cp{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;min-width:42px;text-align:right}
+.cp.hi{color:var(--green)}.cp.mid{color:var(--warn)}.cp.lo{color:var(--accent)}
+/* ALL-VENDOR GRID */
+.ag{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:2px;margin-bottom:22px}
+.ac{background:white;padding:16px;border-left:5px solid var(--blue)}
+.ac.nuevo{border-left-color:var(--accent)}
+.acn{font-family:'Bebas Neue',cursive;font-size:17px;letter-spacing:2px;color:var(--blue)}
+.acn.nuevo{color:var(--accent)}
+.acv{font-family:'Bebas Neue',cursive;font-size:32px;color:var(--accent);line-height:1;margin:2px 0}
+.acs{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+.apb{margin-top:8px;background:var(--pale);height:5px;border-radius:3px;overflow:hidden}
+.apbf{height:100%;border-radius:3px;background:var(--blue)}
+.acr{display:flex;gap:8px;margin-top:5px;font-size:10px;color:var(--muted);flex-wrap:wrap}
+/* TABLA */
+.tw{overflow-x:auto;background:white;margin-bottom:22px}
+table.mst{width:100%;border-collapse:collapse;font-size:11px;min-width:700px}
+table.mst th{background:var(--ink);color:white;font-size:8px;text-transform:uppercase;letter-spacing:1.5px;padding:9px 12px;font-weight:700;text-align:right;white-space:nowrap}
+table.mst th.lf{text-align:left}
+table.mst td{padding:8px 12px;border-bottom:1px solid var(--pale);text-align:right;font-family:'JetBrains Mono',monospace;font-size:10px}
+table.mst td.vc{text-align:left;font-family:'DM Sans',sans-serif;font-weight:700;font-size:11px;color:var(--blue)}
+table.mst td.vc.nuevo{color:var(--accent)}
+table.mst td.mc{color:var(--blue)}table.mst td.dc{color:#B45309}table.mst td.xc{color:var(--green)}
+table.mst tr.tr td{background:var(--ink);color:white;border-bottom:none}
+table.mst tr.tr td.vc{color:var(--gold)}
+table.mst tr:not(.tr):hover td{background:#FAFAFA}
+.nbadge{background:var(--accent);color:white;font-size:8px;padding:1px 5px;border-radius:2px;text-transform:uppercase;letter-spacing:1px;margin-left:5px;vertical-align:middle}
+@media(max-width:900px){.hero{grid-template-columns:repeat(3,1fr)}.g4,.gug{grid-template-columns:repeat(2,1fr)}.main{padding:20px}.site-header{padding:16px 20px}.pstrip,.dnote{padding:8px 20px}.hero{padding:16px 20px}}
+</style>
+</head>
+<body>
+
+<script>
+/* ═══ CUOTAS — v9 (ARMANDO:17 | CARLOS:66 | IRADIS:58 | ZULIMAR:55) TOTAL:373 ═══ */
+const Q = {
+  DIAS_HABILES_MES: 22,
+  DIA_HABIL_ACTUAL: 9,          /* ← actualizar cada día */
+  FECHA_CORTE: "13 de Abril, 2026",
+  metas: {
+    "ARMANDO":       { cajas: 7284,  dolares: 165005, clientes: 17 },
+    "CARLOS":        { cajas: 1461,  dolares:  33096, clientes: 66 },
+    "DAYLIN":        { cajas: 5437,  dolares: 123165, clientes: 69 },
+    "HECTOR JAVIER": { cajas: 2228,  dolares:  50471, clientes: 50 },
+    "IRADIS":        { cajas: 2142,  dolares:  48523, clientes: 58 },
+    "ZULIMAR":       { cajas: 2536,  dolares:  57448, clientes: 55 },
+    "YVAN":          { cajas: 1709,  dolares:  38714, clientes: 47 },
+    "JUAN":          { cajas: 1765,  dolares:  39983, clientes:  5 },
+    "EDWARD":        { cajas:  651,  dolares:  14747, clientes:  6 }
+  }
+};
+
+/* ═══ RESULTADOS — FACTURADO_13-04-26.xlsx ═══ */
+const D = {
+  vendors: ["ARMANDO","CARLOS","DAYLIN","HECTOR JAVIER","IRADIS","ZULIMAR","YVAN","JUAN","EDWARD"],
+  fullnames: {
+    "ARMANDO":"ARMANDO HUGUET","CARLOS":"CARLOS RIVERA","DAYLIN":"DAYLIN MÉNDEZ",
+    "HECTOR JAVIER":"HECTOR SILVA","IRADIS":"IRADIS HERNÁNDEZ",
+    "ZULIMAR":"ZULIMAR ROJAS","YVAN":"YVAN MORA",
+    "JUAN":"JUAN JARABA","EDWARD":"EDWARD RAMÍREZ"
+  },
+  new_vendors: ["JUAN","EDWARD"],
+  ALLG: ["ALFONZO RIVAS","BUENA VENTURA","COLOMBINA","DIVINO NIÑO","FERREIRA","INDUSTRIAS JAI","INPLAJACA","NUCIVEN","OLEICA","OTROS","PAVECA","SAN SIMON","SINDONI","SUPER","ZUPLA"],
+  ventas: {
+    "ARMANDO": {
+      cajas:1575, dolares:25596.01, n_clientes:8, dias:6,
+      top10_prod:[["JUMBY RIKOS FAM 1UND 70GX18",720],["CAR. MINIBUM SURTIDO 100UND 500GX16",210],["GALL. MAXCOCO WAFER MOST 10UND 460GX12",150],["GOM. MILLOWS CREAM 50UNDX8",110],["CHUP. BON BON BUM SURTIDO 24UNDX15",100],["GALL. COLOMBINA WAFER FRESA 24UND 288GX24",60],["GOM. BON BON BUM FRESA 80GX24",60],["PAST. DANDY MOST. 18UND 342GX12",60],["CHUP. BON BON BUM FRESA 24UNDX15",40],["CHOC. NUTTELINI MOST 12UND 168GX24",20]],
+      top10_cli:[["DISTRIBUIDORA ASTRO DORADO, C.A",7306.12],["COMERCIAL L&FM, CA",4673.91],["INVERSIONES CIELOS ABIERTOS 2023, C.A",3943.3],["COMERCIAL 99 FORTUNA, C.A",3613.22],["DISTRIBUIDORA CHANG 2020, C.A",3205.98],["DISTRIBUIDORA YORDIS R.S,C.A",2111.04],["INVERSIONES MEGA-ZULIA, C.A.",669.14],["COMERCIAL MUCHPAAG, C.A",73.3]],
+      grupos:["COLOMBINA","FERREIRA"],
+      clientes:["COMERCIAL 99 FORTUNA, C.A","COMERCIAL L&FM, CA","COMERCIAL MUCHPAAG, C.A","DISTRIBUIDORA ASTRO DORADO, C.A","DISTRIBUIDORA CHANG 2020, C.A","DISTRIBUIDORA YORDIS R.S,C.A","INVERSIONES CIELOS ABIERTOS 2023, C.A","INVERSIONES MEGA-ZULIA, C.A."]
+    },
+    "CARLOS": {
+      cajas:786, dolares:15851.77, n_clientes:22, dias:6,
+      top10_prod:[["JUMBY RIKOS FAM 1UND 70GX18",398],["GOM. MILLOWS CREAM 50UNDX8",36],["CHUP. BON BON BUM FRESA 24UNDX15",34],["GOM. BON BON BUM FRESA 80GX24",28],["CHUP. BON BON BUM SURTIDO 24UNDX15",27],["CHOC. NUTTELINI MOST 12UND 168GX24",26],["CAR. MINIBUM SURTIDO 100UND 500GX16",21],["PAST. DANDY MOST. 18UND 342GX12",20],["CHUP. BON BON BUM TROPICAL 24UNDX15",15],["CHOC. CHOCO BREAK BALL 50UND 175GX18",12]],
+      top10_cli:[["NUEVA CONFITERIA EL SUR C.A",5651.8],["COMERCIALIZADORA SIRIANA, C.A.",2146.74],["DISTRIBUIDORA LL 2022, C.A.",2111.04],["SUPERMARKET LA OCCIDENTAL, C.A",1068.32],["SUPER TIENDAS DEL SUR, C.A",781.62],["INVERSIONES FRANKTONY, C.A",639.89],["FASHION CITY SAN FRANCISCO, C.A",572.02],["SUPER OCCIDENTAL LA 15, C.A.",526.78],["GRATTO COMERCIAL C.A",431],["COMERCIAL CALIFORNIA 2021, C.A",387.22]],
+      grupos:["ALFONZO RIVAS","BUENA VENTURA","COLOMBINA","DIVINO NIÑO","FERREIRA","INDUSTRIAS JAI","OTROS","PAVECA","SUPER","ZUPLA"],
+      clientes:["COMERCIAL CALIFORNIA 2021, C.A","COMERCIALIZADORA NUESTRA PROVISION, C.A","COMERCIALIZADORA SIRIANA, C.A.","DISTRIBUIDORA LA WAKA, C.A","DISTRIBUIDORA LL 2022, C.A.","DISTRIBUIDORA V & R C.A","DISTRIBUIDORA VALERIA Y PEDRO, C.A","FASHION CITY SAN FRANCISCO, C.A","GRATTO COMERCIAL C.A","INVERSIONES FRANKTONY, C.A","MARKET EMPINO, C.A","MINI MERCA K&E 2025, C.A","MULTITIENDAS NELLY C.A.","NUEVA CONFITERIA EL SUR C.A","PANADERIA EL ALEMAN, C.A","PANADERIA SUPER SAGRES 2.007, C.A","PANADERIA Y PASTELERIA GRAN FUNDACION, C.A","REPOSTERIA Y ALGO MAS YECMAX, C.A.","SUPER OCCIDENTAL LA 15, C.A.","SUPER TIENDA DETODITO, C.A","SUPER TIENDAS DEL SUR, C.A","SUPERMARKET LA OCCIDENTAL, C.A"]
+    },
+    "DAYLIN": {
+      cajas:1766, dolares:29944.57, n_clientes:39, dias:7,
+      top10_prod:[["JUMBY RIKOS FAM 1UND 70GX18",750],["GALL. MAXCOCO WAFER MOST 10UND 460GX12",147],["GOM. BON BON BUM FRESA 80GX24",101],["JUMBY RIKOS 12UND 15GX8",80],["CHUP. BON BON BUM SURTIDO 24UNDX15",74],["GOM. MILLOWS CREAM 50UNDX8",36],["PAST. DANDY MOST. 18UND 342GX12",35],["GOM. GRISSLY OSOS BEARS 80GX24",34],["GOM. GRISSLY DELFIN 80GX24",32],["GOM. GRISSLY GUSANOS SOUR 80GX24",32]],
+      top10_cli:[["SUPER TIENDA MIS HIJOS 2017, C.A.",5659.56],["SUPER TIENDA LOS CACTUS C.A",3410.32],["MULTITIENDAS 168, C.A.",3235.65],["DISTRIBUIDORA FAMOSO OCCIDENTE, C.A",3235.12],["INVERSIONES LA MISERICORDIA 2025, C.A.",1426.55],["SUPER GRAN SURTIDO, C.A",1251.68],["INVERSIONES LILITA,S, C.A",997.89],["SUPER TIENDAS NUEVO LOS CORTIJOS",975.65],["DISTRIB. Y COMER. LA ESTIBA, C.A",836.83],["COMERCIALIZADORA LIANG Y LIZENG, C.A.",711.18]],
+      grupos:["ALFONZO RIVAS","BUENA VENTURA","COLOMBINA","DIVINO NIÑO","FERREIRA","INDUSTRIAS JAI","OTROS","PAVECA","SAN SIMON","SINDONI","SUPER","ZUPLA"],
+      clientes:["AFAMIA, C.A","COMERCIAL ELENA LING, C.A.","COMER. LIANG Y LIZENG, C.A.","COMERCIALIZADORA LYM 2014, C.A","DIOMAR JOSE MARIN HERNANDEZ","DISTRIBUCIONES D&S, C.A.","DISTRIBUIDORA DE VIVERES EL NENUCO, C.A.","DISTRIBUIDORA FAMOSO OCCIDENTE, C.A","DISTRIBUIDORA SUMAR 2019, C.A","DISTRIB. Y COMER. 24 DE JULIO, C.A","DISTRIB. Y COMER. LA ESTIBA, C.A","IMPORTACIONES DE EXPRESS, C.A","INV. LA MISERICORDIA 2025, C.A.","INVERSIONES LILITA,S, C.A","INVERSIONES TODO A SU TIEMPO, C.A","INVERSIONES TRIGAL, C.A","LACTEOS Y CHARC. EL RINCON DEL QUESO","LACTEOS Y CHARC. LOS HERMANOS, C.A.","MULTITIENDA CARIBE 2, C.A","MULTITIENDA LA OFERTA, C.A.","MULTITIENDA SUR AMERICA, C.A","MULTITIENDA SURTIMAX, C.A","MULTITIENDAS 168, C.A.","SUPER ABASTO LUIS APARICIO CA","SUPER GRAN SURTIDO, C.A","SUPER PANADERIA DIANA, C.A","SUPER TIENDA CURREFOUR, C.A.","SUPER TIENDA EL FUTURO, C.A","SUPER TIENDA EL GIRASOL","SUPER TIENDA LA ECONOMICA, C.A.","SUPER TIENDA LOS CACTUS C.A","SUPER TIENDA LUCKY, C.A","SUPER TIENDA MIS HIJOS 2017, C.A.","SUPER TIENDAS LA GRAN CHINA, C.A","SUPER TIENDAS NUEVO LOS CORTIJOS","SUPERMARKET MARBELLA, C.A","SUPERMARKET MEGAMARK, C.A.","SUPERMARKET MILENIUM, C.A","VIVERES FRUTAS Y VERDURAS EL TATO, C.A."]
+    },
+    "HECTOR JAVIER": {
+      cajas:7, dolares:251.88, n_clientes:1, dias:1,
+      top10_prod:[["GOM. MILLOWS FRESAS C/CREMA 145GX12",2],["CHUP. BON BON BUM FRESA 24UNDX15",1],["CHUP. BON BON BUM SURTIDO 24UNDX15",1],["CHUP. BON BON BUM TROPICAL 24UNDX15",1],["CHUP. PIRULITO SURTIDO 24UND 9GX25",1],["GALL. MUUU MAX CHOCOLATE 12UND 34GX24",1]],
+      top10_cli:[["INV. Y DISTRIB. EL RINCON COLOMBIANO",251.88]],
+      grupos:["COLOMBINA"],
+      clientes:["INVERSIONES Y DISTRIBUCIONES EL RINCON COLOMBIANO, C.A."]
+    },
+    "IRADIS": {
+      cajas:773.49, dolares:24516.56, n_clientes:21, dias:6,
+      top10_prod:[["GALL. MAXCOCO WAFER MOST 10UND 460GX12",74],["GOM. BON BON BUM FRESA 80GX24",51],["GOM. MILLOWS CREAM 50UNDX8",43],["JUMBY RIKOS FAM 1UND 70GX18",39],["CHUP. BON BON BUM FRESA 24UNDX15",38],["CAR. MINIBUM SURTIDO 100UND 500GX16",37],["CHUP. BON BON BUM SURTIDO 24UNDX15",34],["CHUP. BON BON BUM TROPICAL 24UNDX15",33],["GALL. COLOMBINA WAFER FRESA 24UND 288GX24",30],["GALL. COLOMBINA WAFER VAINILLA 24UND 288GX24",27]],
+      top10_cli:[["SUPERMERCADO POPULAR, C.A",4044.68],["SUPERMERCADO TIA JUANA CITY, C.A.",3672.02],["GRAN SURTIDO 2015, C.A",2465.41],["SUPERMERCADO MENE GRANDE C.A",1752.65],["SUPERMERCADO NUMERO UNO, C.A",1679.71],["SUPERMERCADO CENTRO SOL, C.A",1571.27],["GRAN EXITO 2024, C.A.",1344.64],["COMERCIAL DEL ZULIA, C.A",1298.43],["SUPERMARKET FAST FOOD, C.A",1195.16],["CORPORACION LA EMBAJADA, C.A",897.39]],
+      grupos:["ALFONZO RIVAS","BUENA VENTURA","COLOMBINA","DIVINO NIÑO","FERREIRA","INDUSTRIAS JAI","OTROS","SINDONI","ZUPLA"],
+      clientes:["CENTRO SOL, C.A.","COMERCIAL CHEM C.A","COMERCIAL DEL ZULIA, C.A","COMERCIAL KING II, C.A","COMERCIAL MANACENTER 2021, C.A","COMERCIAL XING XING 168, C.A","COMER. Y VIVERES HUANG DE CHAOGUO","CORPORACION LA EMBAJADA, C.A","GRAN EXITO 2024, C.A.","GRAN SURTIDO 2015, C.A","INVERSIONES EL CHOPO, C.A","INVERSIONES ROSCAM L&A, C.A.","MEGA INVERSIONES LA FAMILIA, C.A","MULTITIENDA NUEVO SIGLO, C.A","SUPERMARKET FAST FOOD, C.A","SUPERMERCADO CENTRO SOL, C.A","SUPERMERCADO GRAN MUNDO 88, C.A","SUPERMERCADO MENE GRANDE C.A","SUPERMERCADO NUMERO UNO, C.A","SUPERMERCADO POPULAR, C.A","SUPERMERCADO TIA JUANA CITY, C.A."]
+    },
+    "ZULIMAR": {
+      cajas:298.08, dolares:10584.47, n_clientes:14, dias:7,
+      top10_prod:[["GALL. MAXCOCO WAFER MOST 10UND 460GX12",76],["JUMBY RIKOS FAM 1UND 70GX18",29],["CAR. MINIBUM SURTIDO 100UND 500GX16",17],["CHOC. NUTTELINI MOST 12UND 168GX24",12],["GALL. COLOMBINA WAFER FRESA 24UND 288GX24",12],["CHIC. SPLOT ACIDO LINEA 24UND 324GX18",9],["GOM. BON BON BUM FRESA 80GX24",8],["CHIC. SPLOT SPANTA OJOS 60UND 180GX24",8],["PALITOS DE MAIZ TOM 10UND 20GX5",7],["PALITOS DE MAIZ TOM 60G 8UNDX3",7]],
+      top10_cli:[["INVERSIONES JOHENDRY, C.A",2946.41],["MAXI PINGUINO C.A",2509],["SUPER TIENDA LA H C.A",1896.54],["SUPERTIENDA EL PANDA, C.A",628.17],["INVERSIONES LA MURALLA, C.A",480.43],["SUPERMARKET EXCEL, C.A",478.79],["MULTITIENDAS EXITO, C.A",476.99],["INVERSIONES RODRILARA, C.A",445.13],["CASA DULCE BENDICION, C.A",409.24],["INVERSIONES OLDA, C.A",281.5]],
+      grupos:["ALFONZO RIVAS","BUENA VENTURA","COLOMBINA","DIVINO NIÑO","FERREIRA","NUCIVEN","OTROS","SAN SIMON","SINDONI","ZUPLA"],
+      clientes:["CASA DULCE BENDICION, C.A","COMERCIAL AMIGO, C.A","INV. HORIZONTES 033 - AMOR CANDY, C.A","INVERSIONES JOHENDRY, C.A","INVERSIONES LA MURALLA, C.A","INVERSIONES OLDA, C.A","INVERSIONES RODRILARA, C.A","MAXI PINGUINO C.A","MULTITIENDAS EXITO, C.A","SUPER EXITO CABIMAS, C.A.","SUPER TIENDA LA H C.A","SUPERMARKET EXCEL, C.A","SUPERMERCADO MO 88 C.A","SUPERTIENDA EL PANDA, C.A"]
+    },
+    "YVAN": {
+      cajas:82.42, dolares:2890.39, n_clientes:8, dias:6,
+      top10_prod:[["CHUP. BON BON BUM SURTIDO 24UNDX15",6],["GALL. MAXCOCO WAFER MOST 10UND 460GX12",6],["GALL. MUUU MAX CHOCOLATE 12UND 34GX24",6],["GOM. MILLOWS CREAM 50UNDX8",6],["PASTA SINDONI TORNILLO 1KG(E)X12",5],["PASTA SINDONI VERMICELLI 1KG(E)X12",5],["CHUP. BON BON BUM TROPICAL 24UNDX15",4],["GOM. BON BON BUM FRESA 80GX24",4],["CHUP. BON BON BUM FRESA 24UNDX15",3],["CHOC. NUTTELINI MOST 12UND 168GX24",3]],
+      top10_cli:[["CREA DESARROLLOS. S,A",1559.1],["MERKA EXPRESS CAMINO AL EXITO C.A",449.34],["CONFITERIA Y REPOSTERIA LA LIMPIA S.A",335.75],["SUPER TIENDA LATINO PADILLA C.A",229.81],["CONSORCIO PYN, C.A",147.33],["TUTTO CASA SHOP, C.A",103.04],["CARACOLITOS KIDS, C.A",77.4],["SUPER TIENDA LATINO MARACAIBO, C.A",-11.38]],
+      grupos:["COLOMBINA","FERREIRA","NUCIVEN","PAVECA","SINDONI","SUPER","ZUPLA"],
+      clientes:["CARACOLITOS KIDS, C.A","CONFITERIA Y REPOSTERIA LA LIMPIA S.A","CONSORCIO PYN, C.A","CREA DESARROLLOS. S,A","MERKA EXPRESS CAMINO AL EXITO C.A","SUPER TIENDA LATINO MARACAIBO, C.A","SUPER TIENDA LATINO PADILLA C.A","TUTTO CASA SHOP, C.A"]
+    },
+    "JUAN":   {cajas:0,dolares:0,n_clientes:0,dias:0,top10_prod:[],top10_cli:[],grupos:[],clientes:[]},
+    "EDWARD": {cajas:0,dolares:0,n_clientes:0,dias:0,top10_prod:[],top10_cli:[],grupos:[],clientes:[]}
+  }
+};
+</script>
+
+<header class="site-header">
+  <div class="brand">
+    <div class="logo">RAZ</div>
+    <div class="brand-text">
+      <h1>FACTURADO ABRIL 2026</h1>
+      <p>Dashboard de Resultados de Ventas · I AM RAZ</p>
+    </div>
+  </div>
+  <div class="header-meta">
+    <strong>ABRIL 2026</strong>
+    <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:4px;font-family:'JetBrains Mono',monospace" id="hf">—</div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="sb">
+    <span class="sl">Cajas Vendidas</span>
+    <span class="bnum gold" id="hcj">—</span>
+    <span class="ss hi" id="hcjp">—% meta</span>
+  </div>
+  <div class="sb">
+    <span class="sl">Dólares Vendidos</span>
+    <span class="bnum green" id="hdl">—</span>
+    <span class="ss hi" id="hdlp">—% meta</span>
+  </div>
+  <div class="sb">
+    <span class="sl">Día Hábil</span>
+    <span class="bnum" id="hdi">—</span>
+    <span class="ss" id="hdis">de — hábiles</span>
+  </div>
+  <div class="sb">
+    <span class="sl">Avance del Mes</span>
+    <span class="bnum gold" id="hav">—%</span>
+    <span class="ss">tiempo transcurrido</span>
+  </div>
+  <div class="sb">
+    <span class="sl">Clientes Activados</span>
+    <span class="bnum sm green" id="hac">—</span>
+    <span class="ss" id="hacs">cuota: —</span>
+    <div id="hero-act-names" class="cname-list"></div>
+  </div>
+  <div class="sb">
+    <span class="sl">Cuota Activaciones</span>
+    <span class="bnum sm" id="hcuota">—</span>
+    <div id="hero-pact-inner"></div>
+  </div>
+</div>
+
+<div class="pstrip">
+  <div class="pl">CAJAS</div><div class="pt"><div class="pf cj" id="pcj" style="width:0%"></div></div><div class="pp" id="pcjp">0%</div>
+  <div class="pl">DÓLARES</div><div class="pt"><div class="pf dl" id="pdl" style="width:0%"></div></div><div class="pp" id="pdlp">0%</div>
+  <div class="pl">ACTIVACIONES</div><div class="pt"><div class="pf cl" id="pac" style="width:0%"></div></div><div class="pp" id="pacp">0%</div>
+</div>
+
+<div class="dnote">
+  Datos al: <strong id="dnf">—</strong> &nbsp;·&nbsp; Día hábil <strong id="dnd">—</strong> de <strong id="dnt">—</strong> &nbsp;·&nbsp; Días restantes: <strong id="dnr">—</strong> &nbsp;·&nbsp; Cuotas v9 · Total activaciones: <strong>373</strong>
+</div>
+
+<div class="main">
+  <div class="stitle">RESULTADOS POR VENDEDOR — ABRIL 2026</div>
+  <div class="mtgl">
+    <button class="mbtn active" data-m="kpis">📊 KPIs &amp; Avance</button>
+    <button class="mbtn" data-m="rank">🏆 Rankings</button>
+    <button class="mbtn" data-m="pareto">👑 Pareto Clientes</button>
+    <button class="mbtn" data-m="cob">📐 Coberturas</button>
+    <button class="mbtn" data-m="tabla">📋 Tabla General</button>
+  </div>
+  <div class="vtabs" id="vtabs"></div>
+  <div id="panel"></div>
+</div>
+
+<footer style="background:var(--ink);color:var(--muted);text-align:center;padding:16px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;margin-top:40px;border-top:3px solid var(--accent)">
+  ELABORADO POR: HÉCTOR GONZÁLEZ — COORDINADOR DE VENTAS &nbsp;·&nbsp; RAZ · Dashboard Resultados Abril 2026
+</footer>
+
+<script>
+let AV='ALL', AM='kpis';
+const fmt  = n => Number(n||0).toLocaleString('es-US');
+const fmtM = n => {n=+n||0;if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return n.toFixed(0)};
+const pct  = (a,b) => b?Math.min(a/b*100,200):0;
+const set  = (id,v) => {const e=document.getElementById(id);if(e)e.textContent=v};
+const htm  = (id,v) => {const e=document.getElementById(id);if(e)e.innerHTML=v};
+const barW = (id,p) => {const e=document.getElementById(id);if(e)e.style.width=Math.min(p,100).toFixed(1)+'%'};
+const sh   = (s,n)  => s.length>n?s.slice(0,n)+'…':s;
+const isNew = v => D.new_vendors.includes(v);
+
+function totals(v) {
+  if(v==='ALL') {
+    const t={cajas:0,dolares:0,n_clientes:0}, m={cajas:0,dolares:0,clientes:0};
+    D.vendors.forEach(vv=>{t.cajas+=D.ventas[vv].cajas;t.dolares+=D.ventas[vv].dolares;t.n_clientes+=D.ventas[vv].n_clientes;m.cajas+=Q.metas[vv].cajas;m.dolares+=Q.metas[vv].dolares;m.clientes+=Q.metas[vv].clientes;});
+    return {vd:t,meta:m};
+  }
+  return {vd:D.ventas[v],meta:Q.metas[v]};
+}
+
+function renderHero() {
+  const {vd,meta}=totals(AV);
+  const nAct=vd.n_clientes;
+  const pC=pct(vd.cajas,meta.cajas), pD=pct(vd.dolares,meta.dolares), pA=pct(nAct,meta.clientes);
+  const pT=Q.DIA_HABIL_ACTUAL/Q.DIAS_HABILES_MES*100;
+  const dr=Q.DIAS_HABILES_MES-Q.DIA_HABIL_ACTUAL;
+  const pend=Math.max(meta.clientes-nAct,0);
+  set('hf','Corte: '+Q.FECHA_CORTE);
+  set('hcj',fmt(vd.cajas));        set('hcjp',pC.toFixed(1)+'% meta');
+  set('hdl','$'+fmtM(vd.dolares)); set('hdlp',pD.toFixed(1)+'% meta');
+  set('hdi',Q.DIA_HABIL_ACTUAL);   set('hdis','de '+Q.DIAS_HABILES_MES+' hábiles');
+  set('hav',pT.toFixed(1)+'%');
+  set('dnf',Q.FECHA_CORTE); set('dnd',Q.DIA_HABIL_ACTUAL); set('dnt',Q.DIAS_HABILES_MES); set('dnr',dr);
+  set('hac',nAct); set('hacs','cuota: '+meta.clientes);
+  if(AV!=='ALL'&&D.ventas[AV]&&D.ventas[AV].clientes.length)
+    htm('hero-act-names',D.ventas[AV].clientes.map(c=>`<span class="cname">✓ ${c}</span>`).join(''));
+  else htm('hero-act-names','');
+  set('hcuota',meta.clientes);
+  htm('hero-pact-inner',`<span class="pact-lbl">Clientes por Activar</span><span class="pact-num">${pend}</span><span class="pact-sub">${nAct} activados · ${pend} pendientes</span>`);
+  barW('pcj',pC); set('pcjp',pC.toFixed(1)+'%');
+  barW('pdl',pD); set('pdlp',pD.toFixed(1)+'%');
+  barW('pac',pA); set('pacp',pA.toFixed(1)+'%');
+}
+
+function buildTabs() {
+  const t=document.getElementById('vtabs');
+  const mk=(l,v,c)=>{const b=document.createElement('button');b.className=c;b.dataset.v=v;b.textContent=l;return b;};
+  t.appendChild(mk('TODOS','ALL','vt vt-all active'));
+  D.vendors.forEach(v=>t.appendChild(mk((isNew(v)?'★ ':'')+v,v,'vt'+(isNew(v)?' nuevo':''))));
+  t.addEventListener('click',e=>{if(!e.target.classList.contains('vt'))return;AV=e.target.dataset.v;document.querySelectorAll('.vt').forEach(x=>x.classList.remove('active'));e.target.classList.add('active');renderHero();render();});
+  document.querySelector('.mtgl').addEventListener('click',e=>{if(!e.target.classList.contains('mbtn'))return;AM=e.target.dataset.m;document.querySelectorAll('.mbtn').forEach(x=>x.classList.remove('active'));e.target.classList.add('active');render();});
+}
+
+function render(){document.getElementById('panel').innerHTML=AV==='ALL'?buildAll():buildV(AV);}
+
+function kc(l,v,cl,m,p){return`<div class="kc"><div class="kl">${l}</div><div class="kv ${cl}">${v}</div><div class="km">${m}</div><div class="kbt"><div class="kb ${cl}" style="width:${Math.min(p,100).toFixed(1)}%"></div></div><div class="kp">${p.toFixed(1)}% completado</div></div>`;}
+
+function gc(l,p,col,big,sub){const C=301.6,off=C-(C*Math.min(p,100)/100);return`<div class="gc"><div class="grw"><svg viewBox="0 0 80 80"><circle class="gtr" cx="40" cy="40" r="34"/><circle class="gfl" cx="40" cy="40" r="34" stroke="${col}" style="stroke-dasharray:${C};stroke-dashoffset:${off}"/></svg><div class="gcen"><div class="gpct">${p.toFixed(1)}%</div></div></div><div class="gi"><h4>${l}</h4><div class="big">${p.toFixed(1)}%</div><div class="sub">${big}</div><div class="sub" style="margin-top:3px;color:var(--ink)">${sub}</div></div></div>`;}
+
+function buildV(v){
+  const vd=D.ventas[v],meta=Q.metas[v],nAct=vd.n_clientes;
+  const dr=Math.max(Q.DIAS_HABILES_MES-Q.DIA_HABIL_ACTUAL,1);
+  const pC=pct(vd.cajas,meta.cajas),pD=pct(vd.dolares,meta.dolares),pA=pct(nAct,meta.clientes);
+  const pT=Q.DIA_HABIL_ACTUAL/Q.DIAS_HABILES_MES*100;
+  const ef=pT?Math.min(pC/pT*100,200):0;
+  const rD=Math.max((meta.dolares-vd.dolares)/dr,0),rC=Math.max((meta.cajas-vd.cajas)/dr,0);
+  const pend=Math.max(meta.clientes-nAct,0);
+  const isNuevo=isNew(v);
+  let h=`<div class="vh${isNuevo?' nuevo':''}"><div><div class="vn">${D.fullnames[v]}${isNuevo?'<span class="nbadge">NUEVO</span>':''}</div><div class="vs">${isNuevo?'Vendedor nuevo — cuota basada en KPI Mar-26':'Acumulado al día '+Q.DIA_HABIL_ACTUAL+' de '+Q.DIAS_HABILES_MES+' · '+vd.dias+' días con ventas'}</div></div><div class="vsr"><div class="vsb"><div class="vsl">Cajas vendidas</div><div class="vsv ccj">${fmt(vd.cajas)}</div><div class="vsv sm cmeta">de ${fmt(meta.cajas)} cuota</div></div><div class="vsb"><div class="vsl">Dólares vendidos</div><div class="vsv cdl">$${fmtM(vd.dolares)}</div></div><div class="vsb"><div class="vsl">Activos / Cuota</div><div class="vsv cac">${nAct} <span style="font-size:14px;color:rgba(255,255,255,.45)">/ ${meta.clientes}</span></div></div></div></div>`;
+  if(AM==='kpis'){
+    if(isNuevo&&vd.cajas===0){h+=`<div style="background:white;padding:30px;text-align:center;color:var(--muted)"><div style="font-family:'Bebas Neue',cursive;font-size:32px;color:var(--accent);margin-bottom:8px">SIN FACTURACIÓN</div><div style="font-size:11px">Cuota: <strong>${fmt(meta.cajas)} cajas</strong> / <strong>${meta.clientes} activaciones</strong></div></div>`;return h;}
+    h+=`<div class="g4">${kc('Cajas Vendidas',fmt(vd.cajas),'bl','Cuota: '+fmt(meta.cajas)+' — Faltan: '+fmt(Math.max(meta.cajas-vd.cajas,0)),pC)}${kc('Dólares Vendidos','$'+fmtM(vd.dolares),'go','Meta est.: $'+fmtM(meta.dolares)+' — Faltan: $'+fmtM(Math.max(meta.dolares-vd.dolares,0)),pD)}${kc('Clientes Activados',nAct,'gr','Cuota: '+meta.clientes+' — Pendientes: '+pend,pA)}${kc('Clientes por Activar',pend,'re','de cuota '+meta.clientes+' activaciones',pend/(meta.clientes||1)*100)}</div><div class="g2"><div class="dc dl"><div class="dt">💲 Venta Diaria Requerida — Dólares</div><div class="dm">$${fmtM(rD)} <span class="du">/ día</span></div><div class="dn">Saldo: $${fmtM(Math.max(meta.dolares-vd.dolares,0))} · Días restantes: ${dr}</div></div><div class="dc"><div class="dt">📦 Venta Diaria Requerida — Cajas</div><div class="dm">${fmt(Math.round(rC))} <span class="du">/ día</span></div><div class="dn">Saldo: ${fmt(Math.max(meta.cajas-Math.round(vd.cajas),0))} cajas · Cuota: ${fmt(meta.cajas)}</div></div></div><div class="gug">${gc('Profundidad de Línea',vd.grupos.length/D.ALLG.length*100,'#1A3C5E',vd.grupos.length+' de '+D.ALLG.length+' líneas','grupos con venta este mes')}${gc('Cobertura en Cajas',pC,'#B45309',fmt(vd.cajas)+' / '+fmt(meta.cajas),'cuota: '+fmt(meta.cajas)+' cajas')}${gc('Cobertura Activaciones',pA,'#1E8449',nAct+' / '+meta.clientes,'cuota: '+meta.clientes+' activaciones')}${gc('Eficiencia vs Tiempo',ef,'#E63946',pT.toFixed(1)+'% del mes','ritmo de cajas vs tiempo')}</div>`;
+  }
+  if(AM==='rank'){
+    if(!vd.top10_prod.length){h+=`<div style="background:white;padding:30px;text-align:center;color:var(--muted)">Sin datos de ventas.</div>`;return h;}
+    const mP=vd.top10_prod[0][1],mC=vd.top10_cli.filter(([,d])=>d>0)[0]?.[1]||1;
+    h+=`<div class="ba"><div class="bt">Top 10 Productos — Cajas Vendidas</div>${vd.top10_prod.map(([n,c],i)=>`<div class="br"><div class="bla" title="${n}">${sh(n,22)}</div><div class="btr"><div class="bf bl" style="width:${Math.max(c/mP*100,.5).toFixed(1)}%">${fmt(c)}</div></div><div class="bpc">#${i+1}</div></div>`).join('')}</div><div class="ba"><div class="bt">Top 10 Clientes del Mes — Dólares (Pareto)</div>${vd.top10_cli.filter(([,d])=>d>0).map(([n,d],i)=>`<div class="br"><div class="bla" title="${n}">${sh(n,22)}</div><div class="btr"><div class="bf go" style="width:${Math.max(d/(vd.top10_cli[0]?.[1]||1)*100,.5).toFixed(1)}%">$${fmtM(d)}</div></div><div class="bpc">#${i+1}</div></div>`).join('')}</div>`;
+  }
+  if(AM==='pareto'){
+    if(!vd.top10_cli.length){h+=`<div style="background:white;padding:30px;text-align:center;color:var(--muted)">Sin datos de ventas.</div>`;return h;}
+    let acum=0;
+    h+=`<div class="pa"><div class="ph">Top 10 Clientes — Detalle y Acumulado Pareto</div><table class="pt"><thead><tr><th>#</th><th>Cliente</th><th>Dólares</th><th>% Acum.</th></tr></thead><tbody>${vd.top10_cli.filter(([,d])=>d>0).map(([c,d],i)=>{acum+=d;return`<tr><td><span class="rn ${i<3?'t3':''}">${i+1}</span></td><td><strong>${c}</strong></td><td class="mn" style="color:#B45309">$${fmtM(d)}</td><td style="font-family:'JetBrains Mono',monospace;font-size:10px">${(acum/vd.dolares*100).toFixed(1)}%</td></tr>`;}).join('')}</tbody></table></div><div class="ba" style="margin-top:2px"><div class="bt">Clientes Activos este Mes (${nAct})</div><div class="cli-list">${vd.clientes.map(c=>`<span class="cli-tag">${c}</span>`).join('')}</div></div>`;
+  }
+  if(AM==='cob'){
+    h+=`<div class="ca"><div class="bt" style="margin-bottom:14px">Cobertura por Línea — ${D.fullnames[v]}</div>${D.ALLG.map(g=>{const ok=vd.grupos.includes(g);return`<div class="cr"><div class="cn">${g}</div><div class="ctr"><div class="cfil" style="width:${ok?100:0}%;background:${ok?'var(--green-bg)':'var(--accent)'}"></div></div><div class="cp ${ok?'hi':'lo'}">${ok?'Activa':'Sin venta'}</div></div>`;}).join('')}</div><div class="gug">${gc('Profundidad Línea',vd.grupos.length/D.ALLG.length*100,'#1A3C5E',vd.grupos.length+' de '+D.ALLG.length+' grupos','activos este mes')}${gc('Cobertura Cajas',pC,'#B45309',fmt(vd.cajas)+' / '+fmt(meta.cajas),'cuota: '+fmt(meta.cajas)+' cajas')}${gc('Cobertura Activ.',pA,'#1E8449',nAct+' / '+meta.clientes,'cuota: '+meta.clientes+' activaciones')}${gc('Cobertura Dólares',pD,'#E63946','$'+fmtM(vd.dolares)+' / $'+fmtM(meta.dolares),'vs meta estimada')}</div>`;
+  }
+  if(AM==='tabla')h+=buildTabla();
+  return h;
+}
+
+function buildAll(){
+  const dr=Math.max(Q.DIAS_HABILES_MES-Q.DIA_HABIL_ACTUAL,1);
+  const tC=D.vendors.reduce((s,v)=>s+D.ventas[v].cajas,0),tD=D.vendors.reduce((s,v)=>s+D.ventas[v].dolares,0),tA=D.vendors.reduce((s,v)=>s+D.ventas[v].n_clientes,0);
+  const mC=D.vendors.reduce((s,v)=>s+Q.metas[v].cajas,0),mD=D.vendors.reduce((s,v)=>s+Q.metas[v].dolares,0),mA=D.vendors.reduce((s,v)=>s+Q.metas[v].clientes,0);
+  const pC=pct(tC,mC),pD=pct(tD,mD),pA=pct(tA,mA);
+  const pT=Q.DIA_HABIL_ACTUAL/Q.DIAS_HABILES_MES*100,ef=pT?Math.min(pC/pT*100,200):0;
+  const rD=Math.max((mD-tD)/dr,0),rC=Math.max((mC-tC)/dr,0);
+  const pm={},cm={};
+  D.vendors.forEach(v=>{D.ventas[v].top10_prod.forEach(([n,c])=>pm[n]=(pm[n]||0)+c);D.ventas[v].top10_cli.forEach(([n,d])=>cm[n]=(cm[n]||0)+d);});
+  const top10p=Object.entries(pm).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  const top10c=Object.entries(cm).sort((a,b)=>b[1]-a[1]).filter(([,d])=>d>0).slice(0,10);
+  let h='';
+  if(AM==='kpis'){
+    h+=`<div class="g4">${kc('Cajas Vendidas',fmt(tC),'bl','Cuota equipo: '+fmt(mC)+' — Faltan: '+fmt(Math.max(mC-tC,0)),pC)}${kc('Dólares Vendidos','$'+fmtM(tD),'go','Meta est.: $'+fmtM(mD)+' — Faltan: $'+fmtM(Math.max(mD-tD,0)),pD)}${kc('Clientes Activados',tA,'gr','Cuota: '+mA+' — Pendientes: '+Math.max(mA-tA,0),pA)}${kc('Clientes por Activar',Math.max(mA-tA,0),'re','de cuota '+mA+' activaciones',Math.max(mA-tA,0)/(mA||1)*100)}</div><div class="g2"><div class="dc dl"><div class="dt">💲 Venta Diaria Requerida Equipo — Dólares</div><div class="dm">$${fmtM(rD)} <span class="du">/ día</span></div><div class="dn">Saldo: $${fmtM(Math.max(mD-tD,0))} · Días restantes: ${dr}</div></div><div class="dc"><div class="dt">📦 Venta Diaria Requerida Equipo — Cajas</div><div class="dm">${fmt(Math.round(rC))} <span class="du">/ día</span></div><div class="dn">Saldo: ${fmt(Math.max(mC-Math.round(tC),0))} cajas · Cuota: ${fmt(mC)}</div></div></div><div class="stitle" style="margin-top:16px">Avance por Vendedor</div><div class="ag">${D.vendors.map(v=>{const vd=D.ventas[v],m=Q.metas[v],vC=pct(vd.cajas,m.cajas),vD=pct(vd.dolares,m.dolares),nv=isNew(v);return`<div class="ac${nv?' nuevo':''}"><div class="acn${nv?' nuevo':''}">${D.fullnames[v].split(' ')[0]}${nv?'<span class="nbadge">NEW</span>':''}</div><div class="acv">${fmt(vd.cajas)}</div><div class="acs">cajas · cuota: ${fmt(m.cajas)}</div><div class="apb"><div class="apbf" style="width:${Math.min(vC,100).toFixed(0)}%"></div></div><div style="font-size:9px;color:var(--muted);margin-top:3px;font-family:'JetBrains Mono',monospace">${vC.toFixed(1)}% de cuota</div><div class="acr"><span>💲 $${fmtM(vd.dolares)} <span style="color:${vD>=100?'var(--green)':vD>=70?'var(--warn)':'var(--accent)'}">(${vD.toFixed(0)}%)</span></span><span>👥 ${vd.n_clientes} / ${m.clientes}</span></div></div>`;}).join('')}</div>`;
+  }
+  if(AM==='rank'){
+    const mP=top10p[0]?top10p[0][1]:1,mCv=top10c[0]?top10c[0][1]:1;
+    h+=`<div class="ba"><div class="bt">Top 10 Productos del Equipo — Cajas Vendidas</div>${top10p.map(([n,c],i)=>`<div class="br"><div class="bla" title="${n}">${sh(n,22)}</div><div class="btr"><div class="bf bl" style="width:${Math.max(c/mP*100,.5).toFixed(1)}%">${fmt(c)}</div></div><div class="bpc">#${i+1}</div></div>`).join('')}</div><div class="ba"><div class="bt">Top 10 Clientes del Equipo — Dólares (Pareto)</div>${top10c.map(([n,d],i)=>`<div class="br"><div class="bla" title="${n}">${sh(n,22)}</div><div class="btr"><div class="bf go" style="width:${Math.max(d/mCv*100,.5).toFixed(1)}%">$${fmtM(d)}</div></div><div class="bpc">#${i+1}</div></div>`).join('')}</div>`;
+  }
+  if(AM==='pareto'){
+    h+=`<div class="pa"><div class="ph">Top 10 Clientes del Equipo</div><table class="pt"><thead><tr><th>#</th><th>Cliente</th><th>Dólares</th><th>% del Total</th><th>Vendedor</th></tr></thead><tbody>${top10c.map(([c,d],i)=>{const vf=D.vendors.find(vv=>D.ventas[vv].top10_cli.some(([x])=>x===c))||'—';return`<tr><td><span class="rn ${i<3?'t3':''}">${i+1}</span></td><td><strong>${c}</strong></td><td class="mn" style="color:#B45309">$${fmtM(d)}</td><td style="font-family:'JetBrains Mono',monospace;font-size:10px">${(d/tD*100).toFixed(1)}%</td><td style="font-size:10px;color:var(--blue);font-weight:600">${vf}</td></tr>`;}).join('')}</tbody></table></div>`;
+  }
+  if(AM==='cob'){
+    h+=`<div class="ca"><div class="bt" style="margin-bottom:14px">Cobertura por Línea — Equipo</div>${D.ALLG.map(g=>{const cnt=D.vendors.filter(v=>D.ventas[v].grupos.includes(g)).length,p=cnt/D.vendors.length*100;return`<div class="cr"><div class="cn">${g}</div><div class="ctr"><div class="cfil" style="width:${p.toFixed(1)}%;background:${p>=80?'var(--green-bg)':p>=50?'var(--warn)':'var(--accent)'}"></div></div><div class="cp ${p>=80?'hi':p>=50?'mid':'lo'}">${p.toFixed(0)}%</div></div>`;}).join('')}</div><div class="gug">${gc('Cob. Cajas',pC,'#B45309',fmt(tC)+' / '+fmt(mC),'cuota: '+fmt(mC)+' cajas')}${gc('Cob. Dólares',pD,'#E63946','$'+fmtM(tD)+' / $'+fmtM(mD),'vs meta estimada')}${gc('Cob. Activaciones',pA,'#1E8449',tA+' / '+mA,'cuota: '+mA+' activaciones')}${gc('Eficiencia vs Tiempo',ef,'#1A3C5E',pT.toFixed(1)+'% del mes','ritmo cajas vs tiempo')}</div>`;
+  }
+  if(AM==='tabla')h+=buildTabla();
+  return h;
+}
+
+function buildTabla(){
+  const vList=AV==='ALL'?D.vendors:[AV];
+  let th=`<tr><th class="lf">Vendedor</th>${D.ALLG.map(g=>`<th>${g.length>9?g.slice(0,9)+'..':g}</th>`).join('')}<th>Activos</th><th>CAJAS</th><th>CUOTA CJ</th><th>% CJ</th><th>DÓLARES</th></tr>`;
+  let tb='',tCj=0,tDl=0,tAc=0,tMc=0;
+  vList.forEach(v=>{
+    const vd=D.ventas[v],m=Q.metas[v];
+    tCj+=vd.cajas;tDl+=vd.dolares;tAc+=vd.n_clientes;tMc+=m.cajas;
+    const pC=pct(vd.cajas,m.cajas),nv=isNew(v);
+    let r=`<tr><td class="vc${nv?' nuevo':''}">${D.fullnames[v]}${nv?'<span class="nbadge">NEW</span>':''}</td>`;
+    D.ALLG.forEach(g=>r+=`<td class="${vd.grupos.includes(g)?'xc':''}">${vd.grupos.includes(g)?'✓':'—'}</td>`);
+    r+=`<td class="xc">${vd.n_clientes}</td><td class="mc">${fmt(vd.cajas)}</td><td style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted)">${fmt(m.cajas)}</td><td style="font-family:'JetBrains Mono',monospace;font-size:10px;color:${pC>=100?'var(--green)':pC>=70?'var(--warn)':'var(--accent)'}">${pC.toFixed(1)}%</td><td class="dc">$${fmtM(vd.dolares)}</td></tr>`;
+    tb+=r;
+  });
+  if(AV==='ALL'){const pC=pct(tCj,tMc);let r=`<tr class="tr"><td class="vc">TOTAL EQUIPO</td>`;D.ALLG.forEach(()=>r+='<td>—</td>');r+=`<td>${tAc}</td><td>${fmt(tCj)}</td><td>${fmt(tMc)}</td><td>${pC.toFixed(1)}%</td><td>$${fmtM(tDl)}</td></tr>`;tb+=r;}
+  return`<div class="tw"><table class="mst"><thead>${th}</thead><tbody>${tb}</tbody></table></div>`;
+}
+
+window.addEventListener('load',()=>{buildTabs();renderHero();render();});
+</script>
+</body>
+</html>
